@@ -30,8 +30,8 @@ jobs:
 
       - name: Build with CMake & clang-tidy
         run: |
-          cmake -B build .
-          cmake --build  -DCMAKE_CXX_CLANG_TIDY="clang-tidy" build
+          cmake -G "Ninja" -B build -DCMAKE_CXX_CLANG_TIDY="clang-tidy" .
+          cmake --build build
 
   format-clang-format:
     name: Check formatting
