@@ -1,0 +1,64 @@
+# SPDX-FileCopyrightText: 2025 DESY and the Constellation authors
+# SPDX-License-Identifier: CC0-1.0
+
+stages:
+  - build
+  - lint
+  - format
+
+variables:
+  CCACHE_DIR: $CI_PROJECT_DIR/.cache/ccache
+
+.ccache:
+  cache:
+    key: ccache-$CI_JOB_IMAGE
+    paths:
+      - $CCACHE_DIR/
+    when: always
+
+.cnstln-debian-clang:
+  image: gitlab.desy.de:5555/constellation/constellation/constellation:latest
+
+.debian-gcc:
+  image: gitlab.desy.de:5555/constellation/build-images/debian-gcc:latest
+
+# build stage, including linting with clang-tidy
+
+build-cpp:
+  extends:
+    - .cnstln-debian-clang
+    - .ccache
+  stage: build
+  script:
+    - cmake -B build -DCMAKE_CXX_CLANG_TIDY="clang-tidy" .
+    - cmake --build build
+  artifacts:
+    paths:
+      - build
+    expire_in: 24 hour
+
+# format stage
+
+.format:
+  stage: format
+  needs: []
+
+format:clang-format:
+  extends:
+    - .format
+    - .cnstln-debian-clang
+  script:
+    - clang-format --Werror --dry-run *.cpp *.hpp
+
+format:reuse:
+  extends: .format
+  image: tollerort.desy.de/hub.docker.com/fsfe/reuse:latest
+  script:
+    - reuse lint
+
+format:codespell:
+  extends:
+    - .format
+    - .debian-gcc
+  script:
+    - codespell
