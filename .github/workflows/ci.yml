@@ -1,0 +1,66 @@
+# SPDX-FileCopyrightText: 2025 DESY and the Constellation authors
+# SPDX-License-Identifier: CC0-1.0
+
+name: Constellation GitHub CI Pipeline
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+
+env:
+  CCACHE_DIR: ${{ github.workspace }}/.cache/ccache
+
+jobs:
+  build-cpp:
+    name: Build C++
+    runs-on: ubuntu-latest
+    container:
+      image: gitlab.desy.de:5555/constellation/constellation/constellation:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up ccache cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ccache-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            ccache-${{ runner.os }}-
+
+      - name: Build with CMake & clang-tidy
+        run: |
+          cmake -B build .
+          cmake --build  -DCMAKE_CXX_CLANG_TIDY="clang-tidy" build
+
+  format-clang-format:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    container:
+      image: gitlab.desy.de:5555/constellation/constellation/constellation:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run clang-format
+        run: |
+          clang-format --Werror --dry-run *.cpp *.hpp
+
+  format-reuse:
+    name: Run reuse check
+    runs-on: ubuntu-latest
+    container:
+      image: fsfe/reuse:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run reuse lint
+        run: reuse lint
+
+  format-codespell:
+    name: Check spelling
+    runs-on: ubuntu-latest
+    container:
+      image: gitlab.desy.de:5555/constellation/build-images/debian-gcc:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run codespell
+        run: codespell
