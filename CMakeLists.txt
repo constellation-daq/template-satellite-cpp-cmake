@@ -26,8 +26,11 @@ set_target_properties(TemplateSatelliteLib PROPERTIES INSTALL_RPATH_USE_LINK_PAT
 # Set library output name to satellite type (used in `Satellite -t`)
 set_target_properties(TemplateSatelliteLib PROPERTIES LIBRARY_OUTPUT_NAME "Template")
 
+# Configure main.cpp to load DSO from build directory
+configure_file("main.cpp" "main.cpp" @ONLY)
+
 # Create executable for satellite
-add_executable(SatelliteTemplate "main.cpp")
+add_executable(SatelliteTemplate "${CMAKE_CURRENT_BINARY_DIR}/main.cpp")
 
 # Add Constellation dependencies
 target_include_directories(SatelliteTemplate PUBLIC ${CNSTLN_EXEC_INCLUDE_DIRS})
