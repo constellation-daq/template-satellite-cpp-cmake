@@ -13,6 +13,10 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(CNSTLN_SAT REQUIRED ConstellationSatellite)
 pkg_check_modules(CNSTLN_EXEC REQUIRED ConstellationExec)
 
+# Load clang tools for cmake:
+file(GLOB_RECURSE CXX_SOURCE_FILES *.[itch]pp)
+include("cmake/clang-tools.cmake")
+
 # Create shared library for satellite
 add_library(TemplateSatelliteLib SHARED "TemplateSatellite.cpp" "generator.cpp")
 
