@@ -5,7 +5,7 @@ title: "Template"
 description: "Satellite base structure serving as the basis for new developments"
 category: "External"
 language: "C++"
-parent_class: "TransmitterSatellite"
+parent_class: "Satellite"
 ---
 
 ## First Steps
