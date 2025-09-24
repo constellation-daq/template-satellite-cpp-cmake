@@ -30,7 +30,7 @@ variables:
   image: tollerort.desy.de/hub.docker.com/python:3.11
 
 .cnstln-ci-img:
-  image: gitlab.desy.de:5555/constellation/constellation/constellation_ci:nightly
+  image: gitlab.desy.de:5555/constellation/constellation/constellation_ci:latest
 
 # build stage, including linting with clang-tidy
 

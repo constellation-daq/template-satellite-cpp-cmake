@@ -16,7 +16,7 @@ jobs:
     name: Build C++
     runs-on: ubuntu-latest
     container:
-      image: gitlab.desy.de:5555/constellation/constellation/constellation_ci:nightly
+      image: gitlab.desy.de:5555/constellation/constellation/constellation_ci:latest
     steps:
       - uses: actions/checkout@v4
 
@@ -37,7 +37,7 @@ jobs:
     name: Check formatting
     runs-on: ubuntu-latest
     container:
-      image: gitlab.desy.de:5555/constellation/constellation/constellation_ci:nightly
+      image: gitlab.desy.de:5555/constellation/constellation/constellation_ci:latest
     steps:
       - uses: actions/checkout@v4
 
