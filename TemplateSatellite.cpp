@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Implementation of the template satellite
+ * @brief Implementation of the Template satellite
  *
  * @copyright Copyright (c) 2025 DESY and the Constellation authors.
  * This software is distributed under the terms of the EUPL-1.2 License, copied verbatim in the file "LICENSE.md".
