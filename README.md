@@ -18,7 +18,7 @@ Additional information as well as detailed tutorials on how to implement a new s
 * Rename the satellite using the self-destructing script:
 
   ```sh
-  $ rename-template.py MyName
+  rename-template.py MyName
   ```
 
 * Adjust the satellite base class depending on the target functionality:
@@ -29,8 +29,8 @@ Additional information as well as detailed tutorials on how to implement a new s
 * Build the satellite:
 
   ```sh
-  $ cmake -GNinja -S . -B build/
-  $ ninja -C build/ install
+  cmake -GNinja -S . -B build/
+  ninja -C build/ install
   ```
 
 * Update this `README.md`
@@ -52,8 +52,8 @@ Possible dependencies are described alongside its features, potential pitfalls a
 
 The following parameters are read and interpreted by this satellite. Parameters without a default value are required.
 
-| Parameter  | Description | Type | Default Value |
-|------------|-------------|------|---------------|
+| Parameter | Description | Type | Default Value |
+| --------- | ----------- | ---- | ------------- |
 | `example` | Description of the parameter | Boolean | `true` |
 
 ### Configuration Example
@@ -69,14 +69,14 @@ example = false
 
 The following metrics are distributed by this satellite and can be subscribed to.
 
-| Metric | Description | Value Type | Metric Type | Interval |
-|--------|-------------|------------|-------------|----------|
-| `TIME` | Time since launch in seconds | Float | `LAST_VALUE` | 10s |
+| Metric | Description | Value Type | Interval |
+| ------ | ----------- | ---------- | -------- |
+| `TIME` | Time since launch in seconds | Float | 10s |
 
 ## Custom Commands
 
 This section describes all custom commands the satellite exposes to the command interface.
 
 | Command | Description | Arguments | Return Value | Allowed States |
-|---------|-------------|-----------|--------------|----------------|
+| ------- | ----------- | --------- | ------------ | -------------- |
 | `test` | This command always returns `true` | - | Boolean, always `true` | `NEW`, `INIT`, `ORBIT` |

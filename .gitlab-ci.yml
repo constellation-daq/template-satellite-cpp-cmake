@@ -8,6 +8,7 @@ stages:
 
 variables:
   CCACHE_DIR: $CI_PROJECT_DIR/.cache/ccache
+  PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
 
 .ccache:
   cache:
@@ -42,10 +43,6 @@ build-cpp:
   script:
     - cmake -G "Ninja" -B build -DCMAKE_CXX_CLANG_TIDY="clang-tidy" .
     - cmake --build build
-  artifacts:
-    paths:
-      - build
-    expire_in: 24 hour
 
 # format stage
 
